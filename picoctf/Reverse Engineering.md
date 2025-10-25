@@ -60,3 +60,80 @@ picoCTF{549698}
 - https://www.geeksforgeeks.org/c/gdb-step-by-step-introduction/ - Used this as a reference to learn about gdb and the commands associated with it.
 
 ***
+# 3. Vault door-3
+> This vault uses for-loops and byte arrays. The source code for this vault is here.
+
+## Solution:
+1. First, I opened the java code in VS Code, which they gave in the challenge and started analysing the code.
+2. The code takes our input in the form of a flag as shown 
+```
+String input = userInput.substring("picoCTF{".length(),userInput.length()-1);
+```
+
+And checks if the input is same as what's required accordingly, by calling the function checkPassword(input).
+```
+if (vaultDoor.checkPassword(input)) {
+	    System.out.println("Access granted.");
+	} else {
+	    System.out.println("Access denied!");
+        }
+    }
+```
+3. In the checkPassword function, I came across some hints 
+a) The length of the string should be 32
+```
+ if (password.length() != 32) {
+            return false;
+```
+b) If it passes that condition, the code runs the password through a set of code such that it gets rearranged according to whats required.
+```
+for (i=0; i<8; i++) {
+            buffer[i] = password.charAt(i);
+        }
+        for (; i<16; i++) {
+            buffer[i] = password.charAt(23-i);
+        }
+        for (; i<32; i+=2) {
+            buffer[i] = password.charAt(46-i);
+        }
+        for (i=31; i>=17; i-=2) {
+            buffer[i] = password.charAt(i);
+        }
+```
+c) Finally, the code 'unlocks the vault', if it matches with the condition as shown : AND that input that we gave is the FLAG!!!
+```
+return s.equals("jU5t_a_sna_3lpm18g947_u_4_m9r54f");
+```
+4. Now, I run the code, with the same string given in the code ( as shown above) : picoCTF{jU5t_a_sna_3lpm18g947_u_4_m9r54f} . But it was wrong.
+<img width="615" height="157" alt="3 1" src="https://github.com/user-attachments/assets/580ca59c-5c77-47c6-998b-53b482dec47b" />
+
+
+5. After some more trial and error, I thought, why not print the rearranged format of the flag, which we need to input along with the denying message. So I added a `System.out.println(s);` along with the code. So, on execution, I got the required input 
+```
+Enter vault password: picoCTF{jU5t_a_sna_3lpm18g947_u_4_m9r54f}
+jU5t_a_s1mpl3_an4gr4m_4_u_79958f ----> REQUIRED FORMAT OF CONTENT IN THE FLAG!!!
+Access denied!
+```
+6. On giving the input as picoCTF{jU5t_a_s1mpl3_an4gr4m_4_u_79958f}, the access was granted. Thus, this input is the required flag.
+```
+Enter vault password: picoCTF{jU5t_a_s1mpl3_an4gr4m_4_u_79958f}
+jU5t_a_sna_3lpm18g947_u_4_m9r54f -----> This is the final form of the string that is bring compared.
+Access granted.
+```
+
+## Flag:
+```
+picoCTF{jU5t_a_s1mpl3_an4gr4m_4_u_79958f}
+```
+
+## Concepts Learnt:
+1. This challenge took me through the concept used in reverse engineering, that is to restructure/add your inputs into the code, so that you can understand what data is being passed on. Here, I was able to get the right input bcz I gave the output as the input and the required input was outputted with my improvisation in the code, which solved the challenge.
+
+## Notes:
+- I tried to give the output string, which was given in the code as the input and multiple trial and error versions of that string. This was not actaully what was required in solving the challenge.
+
+## Resources:
+- NIL
+
+***
+

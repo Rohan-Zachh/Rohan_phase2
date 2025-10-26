@@ -60,6 +60,69 @@ picoCTF{549698}
 - https://www.geeksforgeeks.org/c/gdb-step-by-step-introduction/ - Used this as a reference to learn about gdb and the commands associated with it.
 
 ***
+# 2. ARMssembly 1
+> DESCRIPTION
+For what argument does this program print `win` with variables 58, 2 and 3? File: chall_1.S Flag format: picoCTF{XXXXXXXX} -> (hex, lowercase, no 0x, and 32 bits. ex. 5614267 would be picoCTF{0055aabb})
+
+## Solution:
+1. In this challenge,  we are given an arm assembly file. So, I start analyzing the file and the functions in it.
+2. I came across the concept of : stacks(str), loads(ldr), left bit shift and store(lsl), etc
+3. On further analyzing, I got to the point where I saw this :
+```
+.LC0:
+	.string	"You win!"
+	.align	3
+.LC1:
+	.string	"You Lose :("
+	.text
+	.align	2
+	.global	main
+	.type	main, %function
+```
+So, To win, I need to activate .LC0 . 
+4. For that, We want the w0 variable to be 0. If it's not, we branch to .L4 which branches to .L1, and we don't want the result to be .L1 but .L0 . 
+```
+main:
+	stp	x29, x30, [sp, -48]!
+	add	x29, sp, 0
+	str	w0, [x29, 28]
+	str	x1, [x29, 16]
+	ldr	x0, [x29, 16]
+	add	x0, x0, 8
+	ldr	x0, [x0]
+	bl	atoi
+	str	w0, [x29, 44]
+	ldr	w0, [x29, 44]
+	bl	func
+	cmp	w0, 0 <------- WHAT'S REQUIRED!!!
+	bne	.L4
+	adrp	x0, .LC0
+	add	x0, x0, :lo12:.LC0
+	bl	puts
+	b	.L6
+```
+5. Now, we know that w0 should be 0. But how? On tracking back and analyzing the stacks, I found, w0 should be 77, bcz w1 is 90 and w1 and w0 's subtraction result is stored in w0. So, to make the result of w0 = 0, the user input should be 90.
+```
+sub w0, w1, w0
+```
+6. As per question, the flag should be hex, lowercase, no 0x, and 32 bits version of the input. The hex value of 77 in 32 bit form is `0x0000004D`. 
+7. Therefore, the flag is : `picoCTF{0000004d}`
+
+## Flag:
+```
+picoCTF{0000004d}
+```
+
+## Concepts Learnt:
+- I was able to learn the concepts of Stack & registers in ARM assembly.
+- In ARM assembly, registers are small, fast-access storage locations (like w0, w1, sp) used to hold data and intermediate values, while the stack is a region of memory accessed via the stack pointer register (sp, or r13/R13) that stores local variables, return addresses and saved registers when functions are called.
+
+## References:
+- https://azeria-labs.com/writing-arm-assembly-part-1/ - To learn the concepts of ARM assembly.
+
+***
+
+
 # 3. Vault door-3
 > This vault uses for-loops and byte arrays. The source code for this vault is here.
 
@@ -136,4 +199,5 @@ picoCTF{jU5t_a_s1mpl3_an4gr4m_4_u_79958f}
 - NIL
 
 ***
+
 

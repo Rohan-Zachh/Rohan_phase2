@@ -11,10 +11,12 @@ HINT: What are some other ways to hide data?
 3. Also, as .dev file got exported with steghide, which might have been used to hide the flag in the images given or something. ( initial assumption )
 4. Bcz we have a encrypted message, I decided why not put it in the cipher identifier. 
 5. On running it, I was able to identify it as ROT-13 encrytion 
-![alt text](1.1-1.png)
+<img width="1545" height="741" alt="1 1" src="https://github.com/user-attachments/assets/cdbca69c-baf8-4f9f-a4cf-0d33f8210795" />
+
 6. The first part of the message: TFTP DOESNT ENCRYPT OUR TRAFFIC SO WE MUST DISGUISE OUR FLAG TRANSFER
 7. The sencond part of the message : 
-![alt text](1.2-1.png)
+<img width="1382" height="786" alt="1 2" src="https://github.com/user-attachments/assets/2f7af757-5d73-467e-a62f-713fac5f87f3" />
+
 8. Then from the plan.txt file's message was also ROT-13 and it gave the key inorder to solve the challenge, ie KEY: DUEDILIGENCE - the password used for steghide.
 9. Now, I ran steghide on all the 3 image files and the 3rd image, picture3.bmp had hidden the flag, which hid the data in it. On being invoked by steghide, it transferred the flag into flag.txt file. 
 ```
@@ -47,22 +49,23 @@ We found this file. Recover the flag.
 ## Solution:
 1. First, I download the file that's given in the challenge. But, when I tried to open it, I wasn't able to do so.
 2. I also noticed the file downloaded had no extension. So, I ran exiftool on it.
-![alt text](file:///d%3A/Cryptonite-Taskphase/TaskPhase-2/Forensic/2.1.png)
+<img width="1212" height="603" alt="2 1" src="https://github.com/user-attachments/assets/9c94e578-6a7f-454e-ab34-c32d2d7d3f60" />
+
 I found that the file in a bmp file. So, I added the bmp extension to it.
 3. Now, I tried opening it. But on opening it, I wasn't able to see the content in it. So, its more than likely to be corrupted.
 4. On doing some research, I understood that we can use a hex editor to examine what's corrupted in the file.
 5. To uncorrupt the file, I compared it with a normal bmp file, on the hex editor.
 6. On comparison, I found that the info header had characters like : BA D0, instead of numbers like a normal bmp file. So, I converted the characters to the nos given in the normal bmp file like : ` 36 00 00 00 28 00 `. 
 7. On saving it, I got :
-![alt text](file:///d%3A/Cryptonite-Taskphase/TaskPhase-2/Forensic/2.2.png)
+<img width="1150" height="332" alt="2 2" src="https://github.com/user-attachments/assets/6b3a82f6-0b2b-459a-8cea-ccaa040fc2ee" />
+
 which had a fake flag in it.
 8. Here, I came to a hault. So, I focused on the basics, ie, to look into what the challenge name is hinting at? Tunnel vision means to narrow down your vision on something. What if the image we uncorrupted is a cropped version of an even bigger picture? How can we uncrop it? - By increasing the height and width of the image file content.
 9. We can do this process in the hex-editor. So, referencing the website (that I mentioned in the resources), I did this.
 10. The 2nd row is where the bytes of the height and the width are located, ie 4 byted for each height and width. 
 11. I started with changing the height's value, bcz height's value was way less than width's value. I started with 1000's hex value, working my way down. Well, 1000 was wrong, so I couldn't see the content in the image file.
 12. At a height of around 850, I was able to see the content in the file and the flag was revealed in the image as shown !!
-![alt text](file://wsl.localhost/Ubuntu/home/rozakk/picoctf/tunn3l_v1s10n.bmp)
-
+<img width="828" height="617" alt="2 3" src="https://github.com/user-attachments/assets/0a88572b-124e-4fd8-9294-ee26ad72c44f" />
 
 ## Flag:
 ```
@@ -93,7 +96,8 @@ HINTS:
 $ sstv -d (audio_file.wav) -o result.png
 ```
 4. On installing sstv in my wsl, I ran the command ` sstv -d message.wav -o result.png `, which converted the sstv signal into an image file as result.png. On opening result.png, the flag was in it.
-![alt text](result-1.png)
+<img width="520" height="418" alt="result" src="https://github.com/user-attachments/assets/f46afdea-1337-4302-b574-a7d944def0f4" />
+
 ## Flag:
 ```
 picoCTF{beep_boop_im_in_space}
@@ -105,5 +109,6 @@ picoCTF{beep_boop_im_in_space}
 
 ## Resources:
 -https://github.com/colaclanth/sstv - To refer to the sstv command, to convert the audio file into an image file.
+
 
 ***

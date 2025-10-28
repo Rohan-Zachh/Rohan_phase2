@@ -132,7 +132,8 @@ c) A ciphertext c (another large integer) that is the encryption of the plaintex
 5. Look at the size of N and c and estimate: if m is reasonably small (e.g., ASCII flag message) then 𝑚^3 might be less than N.
 6. Therefore, Given the small exponent e=3 and the nature of the encryption, the ciphertext c is close to the cube of the plaintext message m. By calculating the cube root of c, we can retrieve m, then convert it to a readable format to obtain the flag.
 7. The code I wrote for solving the above question:
-![alt text](../Cryptonite-Taskphase/TaskPhase-2/Cryptography/3.1.png)
+<img width="1542" height="882" alt="3 1" src="https://github.com/user-attachments/assets/2a2ecf83-d370-4b38-a6d5-950cac9acf4f" />
+
 
 ## Resources:
 - https://en.wikipedia.org/wiki/RSA_cryptosystem - To look into the concept of RSA.
@@ -141,3 +142,4 @@ c) A ciphertext c (another large integer) that is the encryption of the plaintex
 
 
 ***
+

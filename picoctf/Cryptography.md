@@ -80,7 +80,8 @@ def dynamic_xor_decrypt(semi_ciphertext, text_key):
     return plaintext[::-1]
 ```
 6. After some errors and its corrections in the decryption code, on running the right , as required, I got the flag.
-![alt text](2.1-1.png)
+<img width="516" height="172" alt="2 1" src="https://github.com/user-attachments/assets/dd3c8151-0600-43f9-b2b1-e03e99a31a80" />
+
 
 ## Flag:
 ```
@@ -108,7 +109,7 @@ b) A public exponent e = 3.
 c) A ciphertext c (another large integer) that is the encryption of the plaintext message m under the public key (N, e).
 2. A hint: the exponent is small; something “seems a bit small”.
 3. On placing these respective values on a RSA decoder, I was able to decode the flag
-![alt text](3.2-1.png)
+<img width="1458" height="783" alt="3 2" src="https://github.com/user-attachments/assets/38bcb43b-9305-4a45-8039-91456413ecff" />
 
 ## Flag:
 ```
@@ -137,5 +138,6 @@ c) A ciphertext c (another large integer) that is the encryption of the plaintex
 - https://en.wikipedia.org/wiki/RSA_cryptosystem - To look into the concept of RSA.
 - https://github.com/RsaCtfTool/RsaCtfTool - To refer some tools that can be used in solving RSA challenges
 - https://www.dcode.fr/rsa-cipher - RSA decoder
+
 
 ***

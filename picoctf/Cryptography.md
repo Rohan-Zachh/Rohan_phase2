@@ -1,5 +1,89 @@
 # CRYPTOGRAPHY
 
+# 1. RSA Oracle
+>DESCRIPTION: 
+Can you abuse the oracle?
+An attacker was able to intercept communications between a bank and a fintech company. They managed to get the message (ciphertext) and the password that was used to encrypt the message. 
+- Crytography Threat models: chosen plaintext attack.
+- OpenSSL can be used to decrypt the message. e.g openssl enc -aes-256-cbc -d ...
+- The key to getting the flag is by sending a custom message to the server by taking advantage of the RSA encryption algorithm.
+- Minimum requirements for a useful cryptosystem is CPA security.
+
+## Solution:
+1. First, I enter the netcat given in the challenge, where we can encrypt and decrypt the input we give.
+2. We are given 2 .enc files in the challenge. - secret.enc and password.enc
+3. So, as per the instructions we need to decrypt the password.enc first. But, we cannot do it directly bcz, it shows this on entering the password.
+<img width="1117" height="68" alt="1 1" src="https://github.com/user-attachments/assets/07076518-ca7e-4282-8120-a88467df9b85" />
+
+4. Now we need a work-around inorder to get the password, manipulating the oracle.
+5. For that I run the command `2^e mod N * m^e mod N = (2m)^e mod N`, bcz this way I can trick the oracle into decrypting a related ciphertext, then divide out that known factor and recover the original plaintext m.(using the principles of RSA)
+6. For that conversion, we also need the use of pwn tools. For that, we need to construct a python code.
+7. For that, I write a python code, where the password is printed out as the in the hexadecimal form and then convert it to its ascii value.
+```
+CODE:
+from pwn import remote
+from Crypto.Util.number import long_to_bytes
+
+conn = remote('titan.picoctf.net', 56192)
+
+resp = conn.recvuntil('decrypt.')
+print(resp.decode())
+
+conn.send(b'E\n')
+
+resp = conn.recvuntil('keysize):')
+print(resp.decode())
+
+conn.send(b'\x02\n')
+resp = conn.recvuntil('ciphertext (m ^ e mod n)')
+resp = conn.recvline()
+cipher_2e = int(resp.decode().strip())
+
+cipher_flag = 4228273471152570993857755209040611143227336245190875847649142807501848960847851973658239485570030833999780269457000091948785164374915942471027917017922546
+combined = cipher_2e * cipher_flag
+
+resp = conn.recvuntil('decrypt.')
+print(resp.decode())
+conn.send(b'D\n')
+
+conn.send(str(combined)+'\n')
+
+# Receive decrypted result (as hex)
+resp = conn.recvuntil('hex (c ^ d mod n):')
+print(resp.decode())
+resp2 = conn.recvline()
+decrypted_hex = resp2.decode().strip()
+
+# Convert decrypted hex to integer, then divide by 2 (undo multiplier)
+value = int(decrypted_hex, 16) // 2
+
+# Convert integer to bytes / ASCII to reveal the password/flag
+flag_bytes = long_to_bytes(value)
+print(flag_bytes.decode('ascii'))
+
+conn.close()
+```
+8. On executing the code, we get the ascii value as `da099`, which we use `openssl enc -aes-256-cbc -d -in secret.enc -k da099`, which outputs the flag.
+```
+rozakk@DESKTOP-JPQGP4K:~/picoctf$ openssl enc -aes-256-cbc -d -in secret.enc -k da099
+*** WARNING : deprecated key derivation used.
+Using -iter or -pbkdf2 would be better.
+picoCTF{su((3ss_(r@ck1ng_r3@_92d53250}
+```
+
+## Flag:
+```
+picoCTF{su((3ss_(r@ck1ng_r3@_92d53250}
+```
+
+## Concepts Learnt:
+- I somewhat learned how to do the conversions between integer, hex, bytes and text.
+
+## Resources:
+- https://secgroup.dais.unive.it/wp-content/uploads/2012/11/Practical-Padding-Oracle-Attacks-on-RSA.html - To refer the concepts in RSA.
+
+***
+
 # 2. Custom Encryption 
 > DESCRIPTION
 Can you get sense of this code file and write the function that will decode the given encrypted file content.
@@ -142,4 +226,5 @@ c) A ciphertext c (another large integer) that is the encryption of the plaintex
 
 
 ***
+
 

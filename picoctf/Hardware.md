@@ -12,7 +12,8 @@ As an example, entering x = 34359738368 gives (y0, ..., y11), so the flag would 
 3. So, x = 30478191278 = 011100011000101001000100101010101110
 4. Also, The circuit drawing is somewhat repetitive for 6 blocks (36 inputs to 12 outputs). It appears each 6‐input block yields 2 outputs (36/6 = 6 blocks to 12 outputs). The pattern is consistent in the diagram.
 5. On solving it manually, we get  y = 100010011000 . 
-![alt text](../Cryptonite-Taskphase/TaskPhase-2/Hardware/1.1.jpg)
+![1 1](https://github.com/user-attachments/assets/026436ce-3c1f-4d3a-a4b8-7a9fb07199b6)
+
 6. Therefore, the flag is : nite{100010011000}.
 
 ## Flag:
@@ -24,5 +25,6 @@ nite{100010011000}
 - NIL 
 
 ***
+
 
 

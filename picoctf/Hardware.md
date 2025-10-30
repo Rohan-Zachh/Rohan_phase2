@@ -36,9 +36,11 @@ i like logic and i like files, apparently, they have something in common, what s
 <img width="1920" height="1035" alt="2 1" src="https://github.com/user-attachments/assets/1520694a-535e-4a09-a69c-9cbaf7fd476b" />
 
 3. In the channel 3, it showed it had some data in it, so I used the analyzer to generate the ascii value of the data, the Async Serial in the following settings:
+   
 ![2 2](https://github.com/user-attachments/assets/d6936bf3-0f63-4475-8f45-272de28d82d7)
 
 4. On executing it, I got this as the output.
+   
 ![2 3](https://github.com/user-attachments/assets/937ebe88-2661-44ee-abf1-b2eafa2429f2)
 
 ![2 4](https://github.com/user-attachments/assets/f8062686-a692-4d0e-a31e-6bb692912016)
@@ -62,6 +64,7 @@ FCSC{b1dee4eeadf6c4e60aeb142b0b486344e64b12b40d1046de95c89ba5e23a9925}
 - https://www.educative.io/answers/what-is-bit-plane-slicing - To refer the concepts used in the challenge.
 
 ***
+
 
 
 

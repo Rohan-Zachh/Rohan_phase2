@@ -66,6 +66,73 @@ FCSC{b1dee4eeadf6c4e60aeb142b0b486344e64b12b40d1046de95c89ba5e23a9925}
 
 ***
 
+# 3. Bare Metal Alchemist
+> Description:
+my friend recommended me this anime but i think i've heard a wrong name.
+
+## Solution:
+1. First, I got firmware.elf file from the challenge. I was unsure what it meant.
+2. So, I ran `file firmware.elf`, this was given as output:
+<img width="1132" height="85" alt="3 1" src="https://github.com/user-attachments/assets/40cb049f-fdbf-47da-9402-ea94813e8d88" />
+
+3. From this I understood it is an ELF32 binary for an Atmel AVR microcontroller.
+4. So I somewhat understood that this was a firmware reverse-engineering challenge.
+5. I started by listing the sections using: `avr-objdump -h firmware.elf` and found .bin, .data, .text, etc extensions.
+6. So, I decided to dump the .bin section so we can see any embedded strings:
+```
+dd if=firmware.elf bs=1 skip=$((0x94)) count=$((0x2e4)) of=text_section.bin 2>/dev/null
+hexdump -C text_section.bin | sed -n '1,40p'
+```
+which gave the output as : 
+<img width="1121" height="841" alt="3 2" src="https://github.com/user-attachments/assets/537441de-abc4-4592-b547-91d97b80d406" />
+
+7. After this, I wasted a lot of time coding a lot of non-related stuff and went in different directions.
+8. Then I constructed a python code, inorder to :
+a) The script opens text_section.bin and reads 200 bytes starting at offset 0x68.
+b) It removes any trailing zeros (stops at the first 0x00).
+c) If the result decodes to text containing { and }, it prints that string and stops. 
+d) If nothing matches, it prints "No flag found with this model."
+```
+rozakk@DESKTOP-JPQGP4K:~/picoctf$ python3 - <<'PY'
+> import sys
+> try:
+>     text=open('text_section.bin','rb').read()
+> except FileNotFoundError:
+>     sys.exit("text_section.bin not found. Create it with dd from firmware.elf first.")
+> data=text[0x68:0x68+200]
+> if 0 in data: data=data[:data.index(0)]
+> for K in range(256):
+>     key=(K*2)&0xFF
+>     out=bytes(((b^0xA5)^key) for b in data)
+>     try:
+>         s=out.decode()
+>     except:
+>         continue
+>     if '{' in s and '}' in s:
+>         print(s)
+>         sys.exit(0)
+> print("No flag found with this model.")
+> PY
+```
+9. On executing this, I got the FLAG as the output!!!
+<img width="912" height="502" alt="3 3" src="https://github.com/user-attachments/assets/fc3dd695-d9ed-41e3-8e2c-58d5e2ebd2d7" />
+
+
+## Flag:
+```
+TFCCTF{Th1s_1s_som3_s1mpl3_4rdu1no_f1rmw4re}
+```
+
+## Concept Learnt:
+- I was able to learn a little bit about of Data Encoding/Decoding.
+- I was able to learn some of the concepts of Reverse Engineering Microcontrollers, like Understanding Arduino memory layout and analyzing .hex or .bin dumps.
+
+## Resources:
+- https://github.com/NationalSecurityAgency/ghidra - glanced through this while solving this.
+
+***
+
+
 
 
 

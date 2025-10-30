@@ -62,8 +62,10 @@ FCSC{b1dee4eeadf6c4e60aeb142b0b486344e64b12b40d1046de95c89ba5e23a9925}
 
 ## Resources:
 - https://www.educative.io/answers/what-is-bit-plane-slicing - To refer the concepts used in the challenge.
+- Saleae Logic Software
 
 ***
+
 
 
 

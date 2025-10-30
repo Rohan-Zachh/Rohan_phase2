@@ -26,5 +26,43 @@ nite{100010011000}
 
 ***
 
+# 2. I like Logic
+> Description
+i like logic and i like files, apparently, they have something in common, what should my next step be.
+
+## Solution:
+1. First, I was given a .sal file was given in the question. 
+2. When I googled on how to open it, I found that you can do it using a saleae logic analyzer. This was the interface 
+<img width="1920" height="1035" alt="2 1" src="https://github.com/user-attachments/assets/1520694a-535e-4a09-a69c-9cbaf7fd476b" />
+
+3. In the channel 3, it showed it had some data in it, so I used the analyzer to generate the ascii value of the data, the Async Serial in the following settings:
+![2 2](https://github.com/user-attachments/assets/d6936bf3-0f63-4475-8f45-272de28d82d7)
+
+4. On executing it, I got this as the output.
+![2 3](https://github.com/user-attachments/assets/937ebe88-2661-44ee-abf1-b2eafa2429f2)
+
+![2 4](https://github.com/user-attachments/assets/f8062686-a692-4d0e-a31e-6bb692912016)
+
+![2 5](https://github.com/user-attachments/assets/abca0414-46f1-4d92-9481-51d993a52371)
+
+
+5. In midst of these texts, I found the flag : `FCSC{b1dee4eeadf6c4e60aeb142b0b486344e64b12b40d1046de95c89ba5e23a9925}`
+
+## Flag:
+```
+FCSC{b1dee4eeadf6c4e60aeb142b0b486344e64b12b40d1046de95c89ba5e23a9925}
+```
+## Concept Learnt:
+- I learnt how to use hardware analysis tools like Saleae Logic 2 to interpret and extract data from logic analyzer files.
+
+## Notes:
+- I overcomplicated the challenge a little bit, by using a lot of other options in the software and lost a bit of time. But circled back what was supposed to be done. 
+
+## Resources:
+- https://www.educative.io/answers/what-is-bit-plane-slicing - To refer the concepts used in the challenge.
+
+***
+
+
 
 

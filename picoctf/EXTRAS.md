@@ -48,7 +48,8 @@ picoCTF{now_you_know_about_extensions}
 3. Bcz data section is the usual space where these flags are usually hidden, I opened the data stream as filter.
 4. Now, we follow the UDP stream from there on. In the UDP stream, there are multiple streams that one can look into.
 5. I started going through all the streams that were available, and finally, I reached the stream - 6, where the flag was displayed.
-![alt text](file:///d%3A/Cryptonite-Taskphase/TaskPhase-2/Xtras/3.1.png)
+<img width="1920" height="1032" alt="3 1" src="https://github.com/user-attachments/assets/6febb7c2-c1b6-47b1-ab5c-9ad615b4de93" />
+
 
 ## Flag:
 ```
@@ -106,7 +107,8 @@ The developer of this website mistakenly left an important artifact in the websi
 2. ON doing so, in the beginning of the source page itself, we have some css code links. 
 3. Then I started trying trial and error efforts for finding the flag / anything related to it in these css codes.
 4. And in "css/style.css", I found the flag, when I searched up picoCTF in the code's page.
-![alt text](5.1-1.png)
+<img width="632" height="252" alt="5 1" src="https://github.com/user-attachments/assets/44f6f958-de08-4215-b987-3c133dd51647" />
+
 
 ## Flag:
 ```
@@ -117,6 +119,50 @@ picoCTF{1nsp3ti0n_0f_w3bpag3s_8de925a7}
 - NIL
 
 ***
+
+# 6. picobrowser
+>DESCRIPTION:
+This website can be rendered only by picobrowser, go and catch the flag! https://jupiter.challenges.picoctf.org/problem/26704/ (link) or http://jupiter.challenges.picoctf.org:26704
+
+## Solution:
+1. The website gives us a clue that, we need to make the header of the user agent of the webpage, picobrowser, inorder to view to flag.
+2. For that, I inspect the webpage -> Sources -> More tools -> Network conditions, there I change the user agent of the webpage as "picobrowser", which reveals the flag.
+<img width="1897" height="858" alt="6 1" src="https://github.com/user-attachments/assets/eb9bd737-8975-4126-8b28-a2d8aec5529f" />
+
+
+## Flag:
+```
+picoCTF{p1c0_s3cr3t_ag3nt_e9b160d0}
+```
+## Concepts Learnt:
+
+- I learned how to change the user agent of a website page.
+- Relation b/w User agent and Network : This challenge is related to networking because the User-Agent is part of the HTTP request header, which is sent from the client to the server over a network.
+
+***
+
+# 7. Some Assembly Required 1
+>Description
+http://mercury.picoctf.net:40226/index.html
+
+
+## Solution:
+1. First, I inspect the source code of the webpage and I found that a fetch is being implemented and webassembly is being invoked.
+```
+let _0x5f0229 = await fetch(_0x48c3be(0x1e9))
+      , _0x1d99e9 = await WebAssembly[_0x48c3be(0x1df)](await _0x5f0229[_0x48c3be(0x1da)]())
+```
+2. So, there is a webassembly directory as well, where I was able to find the flag.
+<img width="1071" height="565" alt="7 1" src="https://github.com/user-attachments/assets/766a6380-6d3a-4068-8e52-806d5d637375" />
+
+
+## Flag:
+```
+picoCTF{cb688c00b5a2ede7eaedcae883735759}
+```
+
+
+
 
 
 

@@ -59,7 +59,8 @@ Found: iloveyou1
 11. Thus, I found that the password is : iloveyou1 . 
 12. Now, I pass the passphrase and a file `flag.txt` gets pushed out. 
 13. On opening the flag.txt file using cat, the flag is revealed 
-![alt text](file:///d%3A/Cryptonite-Taskphase/Custom%20Challenges/Digital%20Forensic/1.1.png)
+<img width="761" height="266" alt="1 1" src="https://github.com/user-attachments/assets/d8035e99-5436-4dbe-8a94-a50d9a9da65e" />
+
 
 
 ## Flag:
@@ -76,5 +77,6 @@ nite{h1d3_4nd_s33k_but_w1th_st3g_sdfu9s8}
 - https://www.keepersecurity.com/blog/2023/08/04/understanding-rockyou-txt-a-tool-for-security-and-a-weapon-for-hackers/ - To learn about rockyou.txt wordlist 
 
 ***
+
 
 

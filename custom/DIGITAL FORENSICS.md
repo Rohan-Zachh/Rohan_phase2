@@ -74,9 +74,56 @@ nite{h1d3_4nd_s33k_but_w1th_st3g_sdfu9s8}
 - rockyou.txt is one of the most popular and commonly used password wordlists. It contains millions of real passwords leaked from the old RockYou website breach and is now used in cybersecurity and CTFs for testing or cracking password-protected files.
 
 ## Resources:
-- https://www.keepersecurity.com/blog/2023/08/04/understanding-rockyou-txt-a-tool-for-security-and-a-weapon-for-hackers/ - To learn about rockyou.txt wordlist 
+- https://www.keepersecurity.com/blog/2023/08/04/understanding-rockyou-txt-a-tool-for-security-and-a-weapon-for-hackers/ - To learn about rockyou.txt wordlist
 
 ***
+
+# 2. Nutrela Chunks
+>Description:
+
+One of my favorite foods is soya chunks. But as I was enjoying some Nutrela today, I noticed a few chunks weren’t quite right. Seems like something’s off with their structure. Could you help me fix these broken chunks so I can enjoy my meal again?
+
+## Solution:
+1. From reading the challenge description, I got some suspicious clues like there is something to do with the file structure in this challenge.
+2. On downloading and opening the .png file, they gave in the challenge, the content in the file wasn't visible bcz something like file format error is there, as per the messsage from the image viewer software.
+3. So, I ran exiftool on the file, and it showed file format error under the error section. 
+4. Nothing much helping. So, I opened the .png file in the hexeditor HxD. 
+5. First, I was able detect some error in the file signature hex values. So, on rectfying it, I tried opening the file, but I wasn't able to
+```
+file signature - 89 50 4E 47 0D 0A 1A 0A
+```
+5. Then, I further analyzed the hex values of the corruped .png file and this is what I was able to find.
+- The problem was with IHDR, IDAT and IEND, being initialised as ihdr, idat, iend in the current file. 
+6. So, I converted the lower case initialisation to uppercase, by replacing the required hex values at the required position.
+7. The corresponding hex changes :
+```
+49 48 44 52 - IHDR
+49 44 41 54	- IDAT
+49 45 4E 44 - IEND
+```
+8. On saving these changes and on opening the file again, the flag was visible in the file.
+<img width="1000" height="1000" alt="nutrela (1)" src="https://github.com/user-attachments/assets/b883954e-c287-4c92-a0bc-b18dc2efcdbf" />
+
+
+## Flag:
+```
+nite{n0w_y0u_kn0w_ab0ut_PNG_chunk5}
+```
+
+## Concepts Learnt:
+- I was able to learn about the concepts of File Signature, Chunk Structure and the Critical chunks. 
+- Critical chunks :
+a) IHDR (Image Header): Stores the image dimensions, bit depth, and color type.
+b) IDAT (Image Data): Contains the compressed pixel data (using Zlib).
+c) IEND (Image End): Marks the end of the file.
+
+## Resources:
+- I used the HxD software to correct the hex values of the png file
+
+***
+
+***
+
 
 
 

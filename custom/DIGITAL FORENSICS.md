@@ -121,8 +121,42 @@ c) IEND (Image End): Marks the end of the file.
 - I used the HxD software to correct the hex values of the png file
 
 ***
+# 3. RAR the Abyss
+> DESCRIPTION: 
+Two philosophers peer into the networked abyss and swap a secret. Use the secret to decrypt the Abyss’ RAwR and pull your flag from the void.
+
+## Solution:
+1. In the challenge, it is mentioned that a secret is passed, in the description. 
+2. A .pcap file is given, which I was able to open in WireShark. 
+3. So, on opening it, by reconstructing the TCP streams (the chat traffic) in the file, I was able to see a conversation between "Camus" and "Nietzsche". 
+<img width="1907" height="977" alt="3 1" src="https://github.com/user-attachments/assets/c3e7fbae-9ceb-4429-b2d5-78b12631109d" />
+
+4. On following the TCP stream and on changing the streams, I was able to view these messages on 3 consecutive streams : 
+```
+Camus: whats the password ?
+Nietzsche: b3y0ndG00dand3vil
+Camus: thanks
+```
+5. After some trial and error on trying to find what is next step is, I noticed the hint in the challenge's title, which is, "RAR" the abyss.pcap. 
+6. So, I converted the .pcap file to .rar file, using WinRAR and opened it using the password that we got earlier.
+7. On doing so, a flag.txt file was inside it, which had the flag in text.
+
+## Flag:
+```
+nite{thus_sp0k3_th3_n3tw0rk_f0r3ns1cs_4n4lyst}
+```
+
+## Concepts Learnt:
+- With this challenge, I was able to learn about some of the concepts of Network Forensics (PCAP Analysis) and File Carving.
+- TCP Stream Reconstruction - This is the process of reassembling all packets from a single network connection into a complete, readable conversation, allowing you to see transferred data like chat, passwords, or files.
+- Use Wireshark's "Follow TCP Stream" feature to instantly view the full data exchange between two endpoints, which is crucial for finding embedded secrets.
+
+## Resources:
+- Wireshark software - I used this to extract the password from the tcp stream in the given .pcap file.
+
 
 ***
+
 
 
 

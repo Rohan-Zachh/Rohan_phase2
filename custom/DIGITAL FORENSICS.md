@@ -154,8 +154,104 @@ nite{thus_sp0k3_th3_n3tw0rk_f0r3ns1cs_4n4lyst}
 ## Resources:
 - Wireshark software - I used this to extract the password from the tcp stream in the given .pcap file.
 
+***
+
+# 4. NineTails
+>DESCRIPTION
+Description:
+
+Looks like I got a little too clever and hid the flag as a password in Firefox, tucked away like one of NineTails’ many tails. Recover the "logins" and the "key4" and let it guide you to the flag.
+
+Hint:
+I named my Ninetails "j4gjesg4", quite a peculiar name isn't it?
+
+## Solution:
+1. In the challenge, we are given .rar file, which I downloaded it and extracted a .ad1 file from it.
+2. To open the .ad1 file, I downloaded a FTK Imager - Exterro FTK Imager. 
+3. I opened the .ad1 file in the FTK imager as an evidence item and as an image file.
+4. On getting access into the .ad1 file, I was able to see multiple folders in it.
+5. Referring the description of the challenge, "hid the flag as a password in Firefox", "Recover the "logins" and the "key4" and "I named my Ninetails "j4gjesg4"".
+6. Following the 1st lead, I started searching for the Firefox folder in the folders given and found it. After that, I spotted the "j4gjesg4" tag-folder on one of the folder names in profile section 
+7. Now referring the 2nd lead, - "Recover the "logins" and the "key4" - which are key4.db and logins.json files in the "j4gjesg4.default-release" folder.
+8. On extracting them, now we needed to open them to get to the flag.
+9. For those purposes, we use a python tool - firepwd, I cloned the git which has this tool.
+10. Then I used the firepwd tool, to extract the info from the files, by opening it in a virtual environment, installing pycryptodome inside venv and running firepwd using this environment, by passing the command (as shown below) and it gave the output as below:
+```bash
+(venv) rozakk@DESKTOP-JPQGP4K:~/firepwd$ python firepwd.py -d ~/custom
+globalSalt: b'b5dbfec66b891e193f516eccaf39209a93634332'
+ SEQUENCE {
+   SEQUENCE {
+     OBJECTIDENTIFIER 1.2.840.113549.1.5.13 pkcs5 pbes2
+     SEQUENCE {
+       SEQUENCE {
+         OBJECTIDENTIFIER 1.2.840.113549.1.5.12 pkcs5 PBKDF2
+         SEQUENCE {
+           OCTETSTRING b'eaa234484d176f2f091e1a9b2162b550a9874bf9ced92daa19c43e058b1328cf'
+           INTEGER b'01'
+           INTEGER b'20'
+           SEQUENCE {
+             OBJECTIDENTIFIER 1.2.840.113549.2.9 hmacWithSHA256
+           }
+         }
+       }
+       SEQUENCE {
+         OBJECTIDENTIFIER 2.16.840.1.101.3.4.1.42 aes256-CBC
+         OCTETSTRING b'c361eb13322fd6004ad463de0ef2'
+       }
+     }
+   }
+   OCTETSTRING b'c2cb6eb12879f4c649458e59d634f355'
+ }
+clearText b'70617373776f72642d636865636b0202'
+password check? True
+ SEQUENCE {
+   SEQUENCE {
+     OBJECTIDENTIFIER 1.2.840.113549.1.5.13 pkcs5 pbes2
+     SEQUENCE {
+       SEQUENCE {
+         OBJECTIDENTIFIER 1.2.840.113549.1.5.12 pkcs5 PBKDF2
+         SEQUENCE {
+           OCTETSTRING b'ae2720e0964ce4beabedba40345712df4234f9ac9cd86e53a08982b65abbbd9c'
+           INTEGER b'01'
+           INTEGER b'20'
+           SEQUENCE {
+             OBJECTIDENTIFIER 1.2.840.113549.2.9 hmacWithSHA256
+           }
+         }
+       }
+       SEQUENCE {
+         OBJECTIDENTIFIER 2.16.840.1.101.3.4.1.42 aes256-CBC
+         OCTETSTRING b'e3f13fa968393e84117de43bee0e'
+       }
+     }
+   }
+   OCTETSTRING b'7810f052c04cd95b738f9df37a27fe297c3cc97d3a04ca7a71b89ba111f1dbbf'
+ }
+clearText b'ab1ccd54c13b1573648a347a6e4c73dcc27af8cb8ad3c74c0808080808080808'
+decrypting login/password pairs
+https://www.rehack.xyz:b'warlocksmurf',b'GCTF{m0zarella'
+ https://ctftime.org:b'ilovecheese',b'CHEEEEEEEEEEEEEEEEEEEEEEEEEESE'
+https://www.reddit.com:b'bluelobster',b'_f1ref0x_'
+https://www.facebook.com:b'flag',b'SIKE'
+https://warlocksmurf.github.io:b'Man I Love Forensics',b'p4ssw0rd}'
+```
+11. On combining the strings of text given at the end of the list of text, as shown above, the flag was recovered successfully.
+
+## Flag:
+```
+GCTF{m0zarella_f1ref0x_p4ssw0rd}
+```
+## Concepts Learnt:
+- firepwd tool - Firepwd is used because Firefox stores saved passwords in an encrypted format spread across multiple files (key4.db, logins.json, etc).
+- You cannot directly open these files and read the passwords — they are cryptographically protected. Firepwd automates the entire decryption process.
+
+## Resources:
+- Exterro FTK Imager software - I used it to extract key4.db and logins.json files from .ad1 file
+- https://github.com/lclevy/firepwd - Github repo which I used to clone firepwd tool.
+
 
 ***
+
 
 
 
